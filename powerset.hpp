@@ -1,4 +1,11 @@
 #pragma once
+#include "IterStream.hpp"
+#include <math.h>
+/**
+* powerset order by binary
+* for example "abc" -> {} = 000,{a} = 001,..
+* and so on...
+*/
 namespace itertools {
 
 	template <typename T>
@@ -10,47 +17,55 @@ namespace itertools {
 		_powerset(T _iterable1) :iterable1{_iterable1} {
 		
 		}
-		/*
 		//iterator
-		template <typename IT>
+		template <typename U>
 		class iterator {
 		private:
-			IT iterator1;
+			U start;
+			U stop;
+			unsigned int power_size;
+			unsigned int index;
 		public:
 
-			iterator(IT _iterator1) :iterator1{_iterator1} {
+			iterator(U _start, U _stop) :start{ _start }, stop{ _stop },power_size{ 0 }, index{ 0 }{
+				U temp_start = start;
+					while (temp_start != stop)
+					{
+						++power_size;
+						++temp_start;
+					}
+					power_size = pow(2, power_size);
 			}
-			// Note that the method is const as this operator does not
-		// allow changing of the iterator.
-		// Note that it returns T& as it allows to change what it points to.
-		// A const_iterator class will return const T&
-		// and the method will still be const
-			// ++i;
-			decltype(*iterator1) operator*() const {
-				return *iterator1;
+			auto operator*() const {
+				std::vector<decltype(*start)> ith;// start
+				U temp_start = start;// begin point for variables
+				unsigned int i = index;//index point for powerset
+				while (i != 0 && temp_start != stop) {//if index is zero stop becaues it while finsh or index number was zero
+					unsigned int currentBit = i % 2;// take lsb(less significant bit) check if its 1 or 0
+					i  = i >> 1;// shift left or divide by 2 inorder to remove lsb from current index number 
+					if (currentBit == 1)//if bit is 1 then insert current variable in to set
+						ith.emplace_back(*temp_start);
+					++temp_start;//move forward for each bit
+				}
+				
+				return ith;//return set
 			}
 			iterator& operator++() {
-				iterator1++;
+				++index;//move powerset index forward
 				return *this;
 			}
 
-			bool operator==(const iterator& rhs) const {
-				return iterator1 == rhs.iterator1;
-			}
-
-			bool operator!=(const iterator& rhs) const {
-				return false;
+			bool operator!=(const iterator& rhs){
+				return index != rhs.power_size;//stop when index reach power_size
 			}
 		};  // END OF CLASS ITERATOR
-		*/
-		int* begin() const {
-			return nullptr;
-			//return iterator<decltype(iterable1.begin())>(iterable1.begin());
+		
+		iterator<decltype(iterable1.begin())> begin() const {
+			return iterator<decltype(iterable1.begin())>(iterable1.begin(), iterable1.end());
 		}
 
-		int* end() const {
-			return nullptr;
-			//return iterator<decltype(iterable1.end())>(iterable1.end());
+		iterator<decltype(iterable1.end())> end() const {
+			return iterator<decltype(iterable1.end())>(iterable1.begin(), iterable1.end());
 		}
 	};
 	template <typename T>
