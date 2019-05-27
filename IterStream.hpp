@@ -8,6 +8,7 @@
 * we can control how it will display the values of incoming input
 */
 namespace itertools {
+	/*
 	template<typename Iterable>
 	string iterable_to_string(const Iterable& iterable) {
 		ostringstream ostr;
@@ -15,7 +16,7 @@ namespace itertools {
 			ostr << i << " ";
 		return ostr.str();
 	}
-
+	*/
 	template <typename T, typename U>
 	std::ostream& operator<<(std::ostream & os,const std::pair<T,U> &p) {//overload pair output stream
 		os << p.first << "," << p.second;
