@@ -9,7 +9,7 @@
 */
 namespace itertools {
 
-	template <typename T, typename U>
+	template <class T, class U>
 	class _product
 	{
 	private:
@@ -29,11 +29,11 @@ namespace itertools {
 		public:
 			iterator(IT1 _iterator1, IT2 _iterator2) :iterator1{ _iterator1 }, iterator2{ _iterator2 }, start_over{_iterator2} {}
 
-			pair<decltype(*iterator1), decltype(*iterator2)> operator*() const {
-				return pair<decltype(*iterator1), decltype(*iterator2)>(*iterator1, *iterator2);
+			std::pair<decltype(*iterator1), decltype(*iterator2)> operator*() const {
+				return std::pair<decltype(*iterator1), decltype(*iterator2)>(*iterator1, *iterator2);
 			}
 			
-			iterator& operator++() {
+			_product::iterator<IT1,IT2>& operator++() {
 				++iterator2;
 				return *this;
 			}
@@ -47,11 +47,11 @@ namespace itertools {
 				return iterator1 != rhs.iterator1;
 			}
 		};  // END OF CLASS ITERATOR
-		iterator<decltype(iterable1.begin()), decltype(iterable2.begin())> begin() const{
+		auto begin() const{
 			return _product::iterator<decltype(iterable1.begin()), decltype(iterable2.begin())>(iterable1.begin(), iterable2.begin());
 		}
 
-		iterator<decltype(iterable1.begin()), decltype(iterable2.begin())> end() const{
+		auto end() const{
 			return _product::iterator<decltype(iterable1.end()), decltype(iterable2.end())>(iterable1.end(),iterable2.end());
 		}
 	};

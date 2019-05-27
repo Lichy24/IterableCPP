@@ -32,7 +32,7 @@ namespace itertools {
 				return *iterator2;
 			}
 		// ++i;
-			iterator& operator++() {
+			_chain::iterator<IT1,IT2>& operator++() {
 				if (first)
 					++iterator1;
 				else
@@ -49,12 +49,12 @@ namespace itertools {
 			}
 		};  // END OF CLASS ITERATOR
 		
-		iterator<decltype(iterable1.begin()), decltype(iterable2.begin())> begin() const {
-			return iterator<decltype(iterable1.begin()), decltype(iterable2.begin())>(iterable1.begin(), iterable2.begin());
+		auto begin() const {
+			return _chain::iterator<decltype(iterable1.begin()), decltype(iterable2.begin())>(iterable1.begin(), iterable2.begin());
 		}
 
-		iterator<decltype(iterable1.end()), decltype(iterable2.end())> end() const {
-			return iterator<decltype(iterable1.end()), decltype(iterable2.end())>{iterable1.end(), iterable2.end()};
+		auto end() const {
+			return _chain::iterator<decltype(iterable1.end()), decltype(iterable2.end())>{iterable1.end(), iterable2.end()};
 		}
 	};
 	template <typename T,typename U>

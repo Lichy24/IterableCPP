@@ -7,7 +7,7 @@
 */
 namespace itertools {
 	
-	template <typename T>
+	template <class T>
 	
 	class _range
 	{
@@ -29,7 +29,7 @@ namespace itertools {
 			}
 
 		// ++i;
-			iterator& operator++() {
+			_range::iterator& operator++() {
 				++data;
 				return *this;
 			}
@@ -39,12 +39,12 @@ namespace itertools {
 			}
 		};  // END OF CLASS ITERATOR
 
-		iterator begin() const {
-			return iterator{start};
+		_range::iterator begin() const {
+			return _range::iterator{start};
 		}
 
-		iterator end() const{
-			return iterator{ stop };
+		_range::iterator end() const{
+			return _range::iterator{ stop };
 		}
 	};
 	template <typename T>

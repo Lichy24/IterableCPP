@@ -8,7 +8,7 @@
 */
 namespace itertools {
 
-	template <typename T>
+	template <class T>
 	class _powerset
 	{
 	private:
@@ -37,7 +37,7 @@ namespace itertools {
 					power_size = pow(2, power_size);
 			}
 			auto operator*() const {
-				std::vector<decltype(*start)> ith;// start
+				std::vector<typename std::remove_const<typename std::remove_reference<decltype(*start)>::type>::type> ith;// start
 				U temp_start = start;// begin point for variables
 				unsigned int i = index;//index point for powerset
 				while (i != 0 && temp_start != stop) {//if index is zero stop becaues it while finsh or index number was zero
@@ -50,7 +50,7 @@ namespace itertools {
 				
 				return ith;//return set
 			}
-			iterator& operator++() {
+			_powerset::iterator<U>& operator++() {
 				++index;//move powerset index forward
 				return *this;
 			}
@@ -60,12 +60,12 @@ namespace itertools {
 			}
 		};  // END OF CLASS ITERATOR
 		
-		iterator<decltype(iterable1.begin())> begin() const {
-			return iterator<decltype(iterable1.begin())>(iterable1.begin(), iterable1.end());
+		auto begin() const {
+			return _powerset::iterator<decltype(iterable1.begin())>(iterable1.begin(), iterable1.end());
 		}
 
-		iterator<decltype(iterable1.end())> end() const {
-			return iterator<decltype(iterable1.end())>(iterable1.begin(), iterable1.end());
+		auto end() const {
+			return _powerset::iterator<decltype(iterable1.end())>(iterable1.begin(), iterable1.end());
 		}
 	};
 	template <typename T>
