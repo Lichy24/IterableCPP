@@ -25,7 +25,7 @@ int main() {
 		std::string chain1, chain2, chain3,chain4,chain5,chain6;
 		std::string chainAns1 = "hello", chainAns2 = "123567", chainAns3 = "abcdhello", chainAns4 = "1,a 2,b 3,c 1,a 1,b 1,c 2,a 2,b 2,c 3,a 3,b 3,c ", chainAns5 = "123456";
 		std::string zip1, zip2,zip3,zip4,zip5;
-		std::string zipAns1 = "1,h 2,e 3,l 4,l 5,o ", zipAns2 = "1,x,a,6 2,y,b,7 3,z,c,8 ", zipAns3= "1,4,k 2,5,k 3,6,k a,4,o d,5,o c,6,o ",zipAns4= "{},{} {1},{4} {2},{5} {1,2},{4,5} ";
+		std::string zipAns1 = "1,h 2,e 3,l 4,l 5,o ", zipAns2 = "1,x,a,6 2,y,b,7 3,z,c,8 ", zipAns3= "a,4,k a,4,o d,5,k c,5,o r,6,k d,6,o",zipAns4= "{},{} {1},{4} {2},{5} {1,2},{4,5} ";
 		std::string product1,product2,product3;
 		std::string productAns1 = "1,h 1,e 1,l 1,l 1,o 2,h 2,e 2,l 2,l 2,o 3,h 3,e 3,l 3,l 3,o ",productAns2= "1,a,a,1 1,a,a,2 1,a,a,3 1,a,h,1 1,a,h,2 1,a,h,3 2,a,a,1 2,a,a,2 2,a,a,3 2,a,h,1 2,a,h,2 2,a,h,3 3,a,a,1 3,a,a,2 3,a,a,3 3,a,h,1 3,a,h,2 3,a,h,3 ";
 		std::string powerset1,powerset2,powerset3,powerset4;
@@ -116,18 +116,17 @@ int main() {
 			ss << pair<< " ";
 		zip2 = ss.str();
 		ss.str(std::string());
-		/*
-		for (auto pair : zip(chain(range('a','b'),string("adc")), product(range(4,7),string("ko"))))
-			ss << pair;
+		
+		for (auto pair : zip(chain(range('a','b'),string("adcrd")), product(range(4,7),string("ko"))))
+			ss << pair << " ";
 		zip3 = ss.str();
 		ss.str(std::string());
-		*/
-		/*
-		for (auto pair : zip(powerset(range(1,3)), powerset(range(4,6))))
-			ss << pair;
+		for (auto pair : zip(powerset(range(1, 3)), powerset(range(4, 6)))) {
+			ss << pair << " ";
+		}
 		zip4 = ss.str();
 		ss.str(std::string());
-		*/
+		
 		for (auto pair : zip(range(1,1),range(1,1)))
 			ss << pair;
 		zip5 = ss.str();
@@ -136,8 +135,8 @@ int main() {
 		testcase.setname("Zip test")
 			.CHECK_EQUAL(zip1, zipAns1)
 			.CHECK_EQUAL(zip2, zipAns2)
-			//.CHECK_EQUAL(zip3, zipAns3)
-			//.CHECK_EQUAL(zip4, zipAns4)
+			.CHECK_EQUAL(zip3, zipAns3)
+			.CHECK_EQUAL(zip4, zipAns4)
 			.CHECK_EQUAL(zip5, AnsEmpty);
 		
 		for (auto pair : product(range(1, 4), string("hello")))

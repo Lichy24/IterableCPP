@@ -34,7 +34,7 @@ public:
 			++iterator2;
 			return *this;
 		}
-		bool operator!=(iterator const &rhs) const {
+		bool operator!=(iterator const &rhs){
 			return iterator1 != rhs.iterator1;
 		}
 	};  // END OF CLASS ITERATOR
