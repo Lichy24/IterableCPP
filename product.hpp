@@ -26,8 +26,9 @@ namespace itertools {
 			IT2 iterator2;
 
 			IT2 start_over;
+			bool isIt2Empty;
 		public:
-			iterator(IT1 _iterator1, IT2 _iterator2) :iterator1{ _iterator1 }, iterator2{ _iterator2 }, start_over{_iterator2} {}
+			iterator(IT1 _iterator1, IT2 _iterator2) :iterator1{ _iterator1 }, iterator2{ _iterator2 }, start_over{ _iterator2 }, isIt2Empty{true} {}
 
 			std::pair<decltype(*iterator1), decltype(*iterator2)> operator*() const {
 				return std::pair<decltype(*iterator1), decltype(*iterator2)>(*iterator1, *iterator2);
@@ -39,6 +40,14 @@ namespace itertools {
 			}
 
 			bool operator!=(iterator const &rhs){
+				if (isIt2Empty)
+				{
+					if (!(iterator2!=rhs.iterator2))
+					{
+						return false;
+					}
+					isIt2Empty = false;
+				}
 				if (iterator1 != rhs.iterator1 && !(iterator2 != rhs.iterator2))
 				{
 					iterator2 = start_over;
